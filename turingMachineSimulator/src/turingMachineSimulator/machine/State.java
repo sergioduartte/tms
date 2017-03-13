@@ -5,6 +5,6 @@ import java.util.List;
 public class State {
 	
 	private String name;
-	private List<Transition> transitionFunction;
+	private List<Transition> transitionFunctions;
 
 }

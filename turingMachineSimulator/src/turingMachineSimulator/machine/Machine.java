@@ -11,6 +11,10 @@ public class Machine {
 	private List<String> inputAlphabet;
 	private List<String> tapeAlphabet;
 	
+	private List<String> tape;
+	private int positionOnTape;
+	
+	
 	
 	
 	
