@@ -21,12 +21,9 @@ public class Transition {
 	
 
 	//saida no formato ['simboloLido','simboloAescrever', 'direcaoDaCabeca']
-	public ArrayList<String> getResult(){
-		ArrayList<String> saida = new ArrayList<String>();
-		saida.add(transition.keySet().toString());
-		for (String string : transition.get()) {
-			
-		}
+	public ArrayList<String> getResult(String input){
+		//TODO
+		return null;
 	}
 	
 	
