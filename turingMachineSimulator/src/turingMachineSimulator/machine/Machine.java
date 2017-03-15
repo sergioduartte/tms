@@ -13,21 +13,48 @@ public class Machine {
 	private List<String> tapeAlphabet;
 		
 	
-	public Machine(List<State> states, State initialState, State acceptState, State rejectState, List<String> inputAlphabet, List<String> tapeAlphabet) {
+	public Machine() {
 		this.states = new ArrayList<State>();
-		this.acceptState = new State();
-		this.rejectState = new State();
 		this.inputAlphabet = new ArrayList<String>();
 		this.tapeAlphabet = new ArrayList<String>();
 		
 	}
 	
-	// PAREI AQUI..................................
-	public void addState(String string) {
-		// TODO Auto-generated method stub
+	public void addState(String commandLine) {
+		String[] commands = commandLine.split(" ");
+		State newState = new State(commands[0]);
+		//verifica se o estado atual ja existe nos estados da maquina
+		if (! containsState(commands[0])) {
+			newState.addTransition(commands[1], commands[2],commands[3],commands[4]);
+			states.add(newState);
+		} else {
+			states.get(states.indexOf(newState)).addTransition(commands[1], commands[2],commands[3],commands[4]);
+		}
 		
 	}
+
+	private boolean containsState(String newState) {
+		for (State state : states) {
+			if (state.getName().equals(newState)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
+	//aqui eh onde devem estar os testes da sintaxe, se os estados estao escritos da forma correta, nao gerara erro
+	public void organizeStates() {
+		for (State state : states) {
+			if (state.getName().toLowerCase().equals("q0")) {
+				this.initialState = state;
+			} else if (state.getName().toLowerCase().equals("qa")) {
+				this.acceptState = state;
+			} else if (state.getName().toLowerCase().equals("qr")) {
+				this.rejectState = state;
+			}
+		}
+		
+	}
 	
 	
 	

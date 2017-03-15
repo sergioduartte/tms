@@ -13,24 +13,36 @@ public class TmsController {
 	private List<String> tape;
 	private int positionOnTape;
 	private FactoryMachine factoryMachine;
-	
+
 	public TmsController() {
 		this.commandLines = new ArrayList<String>();
+		this.factoryMachine = new FactoryMachine();
 	}
 
-	public void readCommands(Scanner sc) {
-		System.out.println("=========== When you end it, write 'end' and press enter button ==================");
-		
-		String input = sc.nextLine();
-		
-		while (input != "end") {
+	public void mountMachine(Scanner userInput) {
+
+		readCommands(userInput);
+		machine = factoryMachine.FactoryMachine(commandLines);
+
+	}
+
+	public void readCommands(Scanner userInput) {
+
+		String input = userInput.nextLine();
+
+		while (true) {
+			if (input.equals("end")) {
+				break;
+			}
 			commandLines.add(input);
+			input = userInput.nextLine();
 		}
+
 	}
 
-	public void mountMachine() {
-		machine  = factoryMachine.FactoryMachine(commandLines);
-		
+	public void runMachine() {
+		// TODO
+
 	}
 
 }

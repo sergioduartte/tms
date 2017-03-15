@@ -20,8 +20,7 @@ public class TmsFacade {
 		String opt = sc.nextLine();
 
 		if (opt.toLowerCase().equals("s")) {
-			readCommands(sc); // le da entrada linha por linha os comandos
-			mountMachine(); // monta a maquina baseada nos comandos
+			mountMachine(sc); //le da entrada linha por linha os comandos monta a maquina baseada nos comandos
 			runMachine(); // roda a MT pedindo entradas
 			
 			
@@ -32,19 +31,15 @@ public class TmsFacade {
 
 	}
 
-	private void mountMachine() {
-		controller.mountMachine();
+	private void mountMachine(Scanner userInput) {
+		System.out.println("=========== When you end it, write 'end' and press enter button ==================");
+		controller.mountMachine(userInput);
 		
 	}
 
 	private void runMachine() {
-		// TODO Auto-generated method stub
+		controller.runMachine();
 		
-	}
-
-	private void readCommands(Scanner sc) {
-		controller.readCommands(sc);
-
 	}
 
 	private void printHeader() {
