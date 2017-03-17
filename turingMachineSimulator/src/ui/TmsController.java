@@ -6,12 +6,12 @@ import java.util.Scanner;
 
 import turingMachineSimulator.machine.FactoryMachine;
 import turingMachineSimulator.machine.Machine;
+import turingMachineSimulator.machine.Tape;
 
 public class TmsController {
 	private List<String> commandLines;
 	private Machine machine;
-	private List<String> tape;
-	private int positionOnTape;
+	
 	private FactoryMachine factoryMachine;
 
 	public TmsController() {
@@ -40,9 +40,11 @@ public class TmsController {
 
 	}
 
-	public void runMachine() {
-		// TODO
-
+	public void runMachine(Scanner userInput) {
+		String input = userInput.nextLine();
+		machine.insertOnTape(input);
+		System.out.println(machine.run());
+		
 	}
 
 }

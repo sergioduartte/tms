@@ -13,6 +13,7 @@ public class TmsFacade {
 	public void start() {
 		
 		controller = new TmsController();
+		machine = new Machine();
 		sc = new Scanner(System.in);
 
 		printHeader();
@@ -21,7 +22,7 @@ public class TmsFacade {
 
 		if (opt.toLowerCase().equals("s")) {
 			mountMachine(sc); //le da entrada linha por linha os comandos monta a maquina baseada nos comandos
-			runMachine(); // roda a MT pedindo entradas
+			runMachine(sc); // roda a MT pedindo entradas
 			
 			
 
@@ -32,13 +33,14 @@ public class TmsFacade {
 	}
 
 	private void mountMachine(Scanner userInput) {
-		System.out.println("=========== When you end it, write 'end' and press enter button ==================");
+		System.out.println("=========== When you end it, write 'end' and press enter button ==================\n");
 		controller.mountMachine(userInput);
 		
 	}
 
-	private void runMachine() {
-		controller.runMachine();
+	private void runMachine(Scanner userInput) {
+		System.out.print("\nNow type the input word: ");
+		controller.runMachine(userInput);
 		
 	}
 
