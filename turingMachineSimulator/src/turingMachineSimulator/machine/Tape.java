@@ -28,11 +28,11 @@ public class Tape {
 	}
 	
 	public void move(String direction){
-		if (direction.toLowerCase().equals("l")) {
+		if (direction.equalsIgnoreCase("l")) {
 			this.position--;
-		} else if(direction.toLowerCase().equals("r")){
+		} else if(direction.equalsIgnoreCase("r")){
 			this.position++;
-		} else if(direction.toLowerCase().equals("*")){
+		} else if(direction.equalsIgnoreCase("*")){
 			//ter certeza que nao anda na fita
 		} else {	
 			System.out.println("invalid direction... Please fix your commands and rerun the apllication"); //lancar excessao.
@@ -40,10 +40,24 @@ public class Tape {
 	}
 
 	public void write(String writeSymbol) {
-		if (!writeSymbol.equals("*")) {
+		if (!writeSymbol.equalsIgnoreCase("*")) {
 			input.set(position, writeSymbol); 
 		}
 		
+	}
+
+	public String getTape() {
+		String output = "";
+		for (int i = 0; i <= input.size(); i++) {
+			if (i==0) {
+				output+="[" + input.get(i);
+			} else if (i == input.size()) {
+				output+="]";
+			} else {
+				output+="," + input.get(i);
+			}
+		}
+		return output;
 	}
 
 }

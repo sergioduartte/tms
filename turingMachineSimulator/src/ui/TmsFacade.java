@@ -20,7 +20,7 @@ public class TmsFacade {
 
 		String opt = sc.nextLine();
 
-		if (opt.toLowerCase().equals("s")) {
+		if (opt.equalsIgnoreCase("s")) {
 			mountMachine(sc); //le da entrada linha por linha os comandos monta a maquina baseada nos comandos
 			runMachine(sc); // roda a MT pedindo entradas
 			
@@ -39,7 +39,7 @@ public class TmsFacade {
 	}
 
 	private void runMachine(Scanner userInput) {
-		System.out.print("\nNow type the input word: ");
+		System.out.print("Now type the input word: ");
 		controller.runMachine(userInput);
 		
 	}
@@ -54,7 +54,7 @@ public class TmsFacade {
 		System.out.println(
 				"> any character for <current symbol> and <new symbol> or '-'(hifen) to represent blank symbol");
 		System.out.println(
-				"> the <direction> should be 'l' to 'move left or 'r' to move right, '*' represents 'do not move'");
+				"> the <direction> should be 'l' to 'move left or 'r' to move right, '*' represents 'do not move'\n");
 		System.out.print(">>> Press 'S' to start write your commands, any other to quit the application: ");
 
 	}

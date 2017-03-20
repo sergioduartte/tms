@@ -31,7 +31,7 @@ public class TmsController {
 		String input = userInput.nextLine();
 
 		while (true) {
-			if (input.equals("end")) {
+			if (input.equalsIgnoreCase("end")) {
 				break;
 			}
 			commandLines.add(input);
@@ -41,9 +41,16 @@ public class TmsController {
 	}
 
 	public void runMachine(Scanner userInput) {
+		//recebe a palavra a ser processada
 		String input = userInput.nextLine();
+		//monta a fita com a palavra
 		machine.insertOnTape(input);
-		System.out.println(machine.run());
+		//roda a maquina com a palavra e retorna a string de QA ou QR
+		String result = machine.run();
+		//mostra os passos que a maquina deu para chegar ao resultado final
+		machine.showSteps(userInput);
+		//imprime se a palavra foi aceita ou nao.
+		System.out.println(result);
 		
 	}
 
