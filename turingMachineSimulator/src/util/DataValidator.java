@@ -1,8 +1,11 @@
 package util;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import exceptions.DirectionPatternException;
+import exceptions.MissingCommandException;
 import exceptions.StateNotFoundException;
 import exceptions.StatePatternException;
 import turingMachineSimulator.machine.State;
@@ -10,13 +13,9 @@ import turingMachineSimulator.machine.State;
 public class DataValidator {
 
 	public static void commandValidator(String[] commands) throws StatePatternException, DirectionPatternException {
-		/*
-		 * boolean hasQ0 = false; boolean hasQA = false; // vai pra quando for
-		 * passar por todos os estados... boolean hasQR = false;
-		 */
-
+	
 		String statePattern = "q(\\w+)";
-		String directionPattern = "[l,r]";
+		String directionPattern = "[l,r,*]";
 
 		if (!commands[0].matches(statePattern)) {
 			throw new StatePatternException();
@@ -31,8 +30,7 @@ public class DataValidator {
 	public static void commandsValidator(List<State> states) throws StateNotFoundException{
 
 		boolean hasQ0 = false;
-		boolean hasQA = false; // vai pra quando for passar por todos os
-								// estados...
+		boolean hasQA = false;
 		boolean hasQR = false;
 
 		for (State state : states) {
@@ -63,5 +61,14 @@ public class DataValidator {
 	
 	
 	}
+
+	public static void inputValidator(State state, String actualInput) throws MissingCommandException {
+		if (!state.getFunctions().containsKey(actualInput)) {
+			throw new MissingCommandException(state.getName(), actualInput);
+		}
+		
+	}
+
+
 
 }

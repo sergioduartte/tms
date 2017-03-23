@@ -3,6 +3,9 @@ package turingMachineSimulator.machine;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import exceptions.MissingCommandException;
+import util.DataValidator;
+
 public class State {
 	
 	private String name;
@@ -36,13 +39,20 @@ public class State {
 		return this.getName().equals(otherState.getName());
 	}
 	
-	public String[] processes(String actualInput) {
+	public String[] processes(String actualInput) throws MissingCommandException {
+		
+		DataValidator.inputValidator(this , actualInput);
+		
 		String[] output = new String[3]; //["writeSymbol","directionSymbol","newState",];
 		output[0] = this.transitionFunctions.get(actualInput).get(0);
 		output[1] = this.transitionFunctions.get(actualInput).get(1);
 		output[2] = this.transitionFunctions.get(actualInput).get(2);
 		
 		return output;
+	}
+
+	public HashMap<String, ArrayList<String>> getFunctions() {
+		return this.transitionFunctions;
 	}
 
 }

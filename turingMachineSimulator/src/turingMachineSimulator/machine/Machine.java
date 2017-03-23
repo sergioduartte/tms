@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import exceptions.DirectionPatternException;
+import exceptions.MissingCommandException;
 import exceptions.StateNotFoundException;
 import exceptions.StatePatternException;
 import util.DataValidator;
@@ -15,8 +16,8 @@ public class Machine {
 
 	private List<State> states;
 	private State initialState;
-/*	private State acceptState;
-	private State rejectState;*/
+	private State acceptState;
+	private State rejectState;
 	private List<Configuration> configurations;
 	private int steps;
 
@@ -64,18 +65,17 @@ public class Machine {
 		for (State state : states) {
 			if (state.getName().equalsIgnoreCase("q0")) {
 				this.initialState = state;
-			} 
-/*			else if (state.getName().equalsIgnoreCase("qa")) {
+			} else if (state.getName().equalsIgnoreCase("qa")) {
 				this.acceptState = state;
 			} else if (state.getName().equalsIgnoreCase("qr")) {
 				this.rejectState = state;
-			}*/
+			}
 		}
 
 	}
 
-	// retorna se Aceita ou Rejeita a maquina
-	public String run() {
+	// retorna se Aceita ou Rejeita a palavra
+	public String run() throws MissingCommandException {
 
 		String result = "";
 		String currentInput = tape.getPos();
@@ -97,11 +97,11 @@ public class Machine {
 			currentInput = tape.getPos();
 			currentState = getStateByName(nextSteps[2]);
 
-			if (currentState.getName().equalsIgnoreCase("qa")) {
+			if (currentState.equals(acceptState)) {
 				saveState(currentState.getName(), this.tape.getTape(), steps);
 				result = "=== ACCEPTED ===";
 				break;
-			} else if (currentState.getName().equalsIgnoreCase("qr")) {
+			} else if (currentState.equals(rejectState)) {
 				saveState(currentState.getName(), this.tape.getTape(), steps);
 				result = "=== REJECTED ===";
 				break;

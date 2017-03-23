@@ -3,6 +3,7 @@ package ui;
 import java.util.Scanner;
 
 import exceptions.MachineSyntaxException;
+import exceptions.MissingCommandException;
 import exceptions.StateNotFoundException;
 import turingMachineSimulator.machine.Machine;
 
@@ -39,6 +40,7 @@ public class TmsFacade {
 		try {
 			controller.mountMachine(userInput);
 		} catch (MachineSyntaxException | StateNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -46,7 +48,12 @@ public class TmsFacade {
 
 	private void runMachine(Scanner userInput) {
 		System.out.print("Now type the input word: ");
-		controller.runMachine(userInput);
+		try {
+			controller.runMachine(userInput);
+		} catch (MissingCommandException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import exceptions.MachineSyntaxException;
+import exceptions.MissingCommandException;
 import exceptions.StateNotFoundException;
 import turingMachineSimulator.machine.FactoryMachine;
 import turingMachineSimulator.machine.Machine;
@@ -46,7 +47,7 @@ public class TmsController {
 
 	}
 
-	public void runMachine(Scanner userInput) {
+	public void runMachine(Scanner userInput) throws MissingCommandException {
 		//recebe a palavra a ser processada
 		String input = userInput.nextLine();
 		
