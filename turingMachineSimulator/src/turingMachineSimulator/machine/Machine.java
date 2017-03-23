@@ -1,16 +1,22 @@
 package turingMachineSimulator.machine;
 
 import java.util.ArrayList;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+
+import exceptions.DirectionPatternException;
+import exceptions.StateNotFoundException;
+import exceptions.StatePatternException;
+import util.DataValidator;
 
 public class Machine {
 
 	private List<State> states;
 	private State initialState;
-	private State acceptState;
-	private State rejectState;
+/*	private State acceptState;
+	private State rejectState;*/
 	private List<Configuration> configurations;
 	private int steps;
 
@@ -24,18 +30,21 @@ public class Machine {
 
 	}
 
-	public void addState(String commandLine) {
+	public void addState(String commandLine) throws StatePatternException, DirectionPatternException {
 		String[] commands = commandLine.split(" ");
+		
+		DataValidator.commandValidator(commands);
+		
 		State newState = new State(commands[0]);
-		// verifica se o estado atual ja existe nos estados da maquina
+
 		if (!containsState(commands[0])) {
 			newState.addTransition(commands[1], commands[2], commands[3], commands[4]);
 			states.add(newState);
 		} else {
 			states.get(states.indexOf(newState)).addTransition(commands[1], commands[2], commands[3], commands[4]);
 		}
-
 	}
+
 
 	private boolean containsState(String newState) {
 		for (State state : states) {
@@ -48,15 +57,19 @@ public class Machine {
 
 	// aqui eh onde devem estar os testes da sintaxe, se os estados estao
 	// escritos da forma correta, nao gerara erro
-	public void organizeStates() {
+	public void organizeStates() throws StateNotFoundException {
+		
+		DataValidator.commandsValidator(states);
+		
 		for (State state : states) {
 			if (state.getName().equalsIgnoreCase("q0")) {
 				this.initialState = state;
-			} else if (state.getName().equalsIgnoreCase("qa")) {
+			} 
+/*			else if (state.getName().equalsIgnoreCase("qa")) {
 				this.acceptState = state;
 			} else if (state.getName().equalsIgnoreCase("qr")) {
 				this.rejectState = state;
-			}
+			}*/
 		}
 
 	}

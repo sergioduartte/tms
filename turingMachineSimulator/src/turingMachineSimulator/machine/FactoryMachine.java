@@ -1,25 +1,27 @@
 package turingMachineSimulator.machine;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-public class FactoryMachine {
+import exceptions.MachineSyntaxException;
+import exceptions.StateNotFoundException;
 
-	private Machine machine;
+public class FactoryMachine{
 
 	// Estando em <Estado Atual>, lendo <Simbolo da entrada> eh escrito
 	// <NovoSimbolo> e a cabeça eh movida para a <direcao> na fita indo para
 	// <novo estado>
 
-	public Machine FactoryMachine(List<String> commandLines) {
+	public Machine FactoryMachine(List<String> commandLines) throws MachineSyntaxException, StateNotFoundException {
 		
-		machine = new Machine();
+		Machine machine = new Machine();
 		
-		// para cada linha dos comandos
 		for (int line = 0; line < commandLines.size(); line++) {
-
-			machine.addState(commandLines.get(line));
+			try {
+				machine.addState(commandLines.get(line));
+			} catch (Exception e) {
+				throw new MachineSyntaxException(e.getMessage(), line);
+			}
+			
 
 		}
 		

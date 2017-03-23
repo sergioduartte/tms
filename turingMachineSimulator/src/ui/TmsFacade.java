@@ -2,6 +2,8 @@ package ui;
 
 import java.util.Scanner;
 
+import exceptions.MachineSyntaxException;
+import exceptions.StateNotFoundException;
 import turingMachineSimulator.machine.Machine;
 
 public class TmsFacade {
@@ -23,10 +25,9 @@ public class TmsFacade {
 		if (opt.equalsIgnoreCase("s")) {
 			mountMachine(sc); //le da entrada linha por linha os comandos monta a maquina baseada nos comandos
 			runMachine(sc); // roda a MT pedindo entradas
-			
-			
 
 		} else {
+			System.out.println("Ending the application...");
 			System.exit(0);
 		}
 
@@ -34,7 +35,12 @@ public class TmsFacade {
 
 	private void mountMachine(Scanner userInput) {
 		System.out.println("=========== When you end it, write 'end' and press enter button ==================\n");
-		controller.mountMachine(userInput);
+		
+		try {
+			controller.mountMachine(userInput);
+		} catch (MachineSyntaxException | StateNotFoundException e) {
+			e.printStackTrace();
+		}
 		
 	}
 

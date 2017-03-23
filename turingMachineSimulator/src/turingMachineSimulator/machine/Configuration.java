@@ -12,15 +12,6 @@ public class Configuration {
 		this.currentSteps = currentSteps;
 	}
 	
-	private String[] getConfiguration() {
-		String[] saida = new String[3];
-		saida[0] = this.currentState;
-		saida[1] = this.currentTape;
-		saida[2] = this.currentSteps;
-		return saida;
-
-	}
-
 	public String getCurrentState() {
 		return this.currentState;
 	}

@@ -17,6 +17,10 @@ public class Tape {
 	public void insertOnTape(String input) {
 		
 		this.input.add(BLANK);
+		if (input.equals("")) {
+			this.input.add(BLANK);
+			return;
+		}
 		for (String symbol : input.split("")) { //checar se o symbol é "_"
 			this.input.add(symbol);
 		}
