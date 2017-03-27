@@ -1,23 +1,22 @@
 package util;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import exceptions.DirectionPatternException;
+import exceptions.DuplicatedTransitionException;
 import exceptions.MissingCommandException;
 import exceptions.StateNotFoundException;
 import exceptions.StatePatternException;
-import turingMachineSimulator.machine.State;
+import machine.State;
 
 public class DataValidator {
 
 	public static void commandValidator(String[] commands) throws StatePatternException, DirectionPatternException {
 	
-		String statePattern = "q(\\w+)";
+		String statePattern = "q[\\w\\d]+";
 		String directionPattern = "[l,r,*]";
 
-		if (!commands[0].matches(statePattern)) {
+		if (!commands[0].matches(statePattern) || !commands[4].matches(statePattern) ) {
 			throw new StatePatternException();
 
 		}
@@ -65,6 +64,17 @@ public class DataValidator {
 	public static void inputValidator(State state, String actualInput) throws MissingCommandException {
 		if (!state.getFunctions().containsKey(actualInput)) {
 			throw new MissingCommandException(state.getName(), actualInput);
+		}
+		
+	}
+
+	public static void transitionValidator(State state, String inputSymbol, String directionSymbol, String newState) throws DuplicatedTransitionException {
+		if (state.getFunctions().containsKey(inputSymbol)) {
+			if (state.getFunctions().get(inputSymbol).contains(directionSymbol)) {
+				if (state.getFunctions().get(inputSymbol).contains(newState)) {
+					throw new DuplicatedTransitionException(state.getName());
+				}
+			}
 		}
 		
 	}

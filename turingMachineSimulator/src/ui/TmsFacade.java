@@ -2,21 +2,14 @@ package ui;
 
 import java.util.Scanner;
 
-import exceptions.MachineSyntaxException;
-import exceptions.MissingCommandException;
-import exceptions.StateNotFoundException;
-import turingMachineSimulator.machine.Machine;
-
 public class TmsFacade {
 
-	private Machine machine;
 	private Scanner sc;
 	private TmsController controller;
 
 	public void start() {
 		
 		controller = new TmsController();
-		machine = new Machine();
 		sc = new Scanner(System.in);
 
 		printHeader();
@@ -24,8 +17,10 @@ public class TmsFacade {
 		String opt = sc.nextLine();
 
 		if (opt.equalsIgnoreCase("s")) {
-			mountMachine(sc); //le da entrada linha por linha os comandos monta a maquina baseada nos comandos
-			runMachine(sc); // roda a MT pedindo entradas
+			//le da entrada linha por linha os comandos monta a maquina baseada nos comandos
+			mountMachine(sc); 
+			// roda a MT pedindo entradas
+			runMachine(sc); 
 
 		} else {
 			System.out.println("Ending the application...");
@@ -33,15 +28,15 @@ public class TmsFacade {
 		}
 
 	}
-
+	
+	// vai tentar montar a maquina, caso nao seja possivel, mostra o erro na tela e fecha a aplicacao
 	private void mountMachine(Scanner userInput) {
 		System.out.println("=========== When you end it, write 'end' and press enter button ==================\n");
 		
 		try {
 			controller.mountMachine(userInput);
-		} catch (MachineSyntaxException | StateNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			printException(e);
 		}
 		
 	}
@@ -50,9 +45,8 @@ public class TmsFacade {
 		System.out.print("Now type the input word: ");
 		try {
 			controller.runMachine(userInput);
-		} catch (MissingCommandException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			printException(e);
 		}
 		
 	}
@@ -70,6 +64,12 @@ public class TmsFacade {
 				"> the <direction> should be 'l' to 'move left or 'r' to move right, '*' represents 'do not move'\n");
 		System.out.print(">>> Press 'S' to start write your commands, any other to quit the application: ");
 
+	}
+	
+	private void printException(Exception e){
+		System.out.println("Wasn't able to start the machine. Fix the problems and rerun the application. " + e.getMessage());
+		e.printStackTrace();
+		System.exit(0);
 	}
 
 }

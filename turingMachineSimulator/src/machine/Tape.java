@@ -1,4 +1,4 @@
-package turingMachineSimulator.machine;
+package machine;
 
 import java.util.ArrayList;
 

@@ -4,28 +4,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import exceptions.DirectionPatternException;
+import exceptions.DuplicatedTransitionException;
 import exceptions.MachineSyntaxException;
 import exceptions.MissingCommandException;
 import exceptions.StateNotFoundException;
-import turingMachineSimulator.machine.FactoryMachine;
-import turingMachineSimulator.machine.Machine;
-import turingMachineSimulator.machine.Tape;
+import exceptions.StatePatternException;
+import machine.FactoryMachine;
+import machine.Machine;
 
 public class TmsController {
 	private List<String> commandLines;
 	private Machine machine;
-	
-	private FactoryMachine factoryMachine;
 
 	public TmsController() {
 		this.commandLines = new ArrayList<String>();
-		this.factoryMachine = new FactoryMachine();
 	}
 
-	public void mountMachine(Scanner userInput) throws MachineSyntaxException, StateNotFoundException {
+	public void mountMachine(Scanner userInput) throws MachineSyntaxException, StateNotFoundException, DuplicatedTransitionException{
 
 		readCommands(userInput);
-		machine = factoryMachine.FactoryMachine(commandLines);
+		machine = FactoryMachine.getMachine(commandLines);
 
 	}
 
@@ -38,8 +37,10 @@ public class TmsController {
 		while (true) {
 			if (input.equalsIgnoreCase("end")) {
 				break;
+			} else if (!input.startsWith("!!") || !input.startsWith("!! ")) { // comentarios
+				commandLines.add(input);
 			}
-			commandLines.add(input);
+			// commandLines.add(input);
 			System.out.print(countLine + ". ");
 			input = userInput.nextLine();
 			countLine++;
@@ -48,21 +49,21 @@ public class TmsController {
 	}
 
 	public void runMachine(Scanner userInput) throws MissingCommandException {
-		//recebe a palavra a ser processada
+		// recebe a palavra a ser processada
 		String input = userInput.nextLine();
-		
-		//monta a fita com a palavra
+
+		// monta a fita com a palavra
 		machine.insertOnTape(input);
-		
-		//roda a maquina com a palavra e retorna a string de QA ou QR
+
+		// roda a maquina com a palavra e retorna a string de QA ou QR
 		String result = machine.run();
-		
-		//mostra os passos que a maquina deu para chegar ao resultado final
+
+		// mostra os passos que a maquina deu para chegar ao resultado final
 		machine.showSteps(userInput);
-		
-		//imprime se a palavra foi aceita ou nao.
+
+		// imprime se a palavra foi aceita ou nao.
 		System.out.println(result);
-		
+
 	}
 
 }

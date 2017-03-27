@@ -1,12 +1,11 @@
-package turingMachineSimulator.machine;
+package machine;
 
 import java.util.ArrayList;
-
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
 import exceptions.DirectionPatternException;
+import exceptions.DuplicatedTransitionException;
 import exceptions.MissingCommandException;
 import exceptions.StateNotFoundException;
 import exceptions.StatePatternException;
@@ -30,12 +29,15 @@ public class Machine {
 		this.steps = 0;
 
 	}
+	// caso nao haja nenhum problema com os comandos, sera criado um estado,
+	// caso o estado ja exista,
+	// sera adicionado uma funcao de transicao ao estado existente.
 
-	public void addState(String commandLine) throws StatePatternException, DirectionPatternException {
+	public void addState(String commandLine) throws StatePatternException, DirectionPatternException, DuplicatedTransitionException {
 		String[] commands = commandLine.split(" ");
-		
+
 		DataValidator.commandValidator(commands);
-		
+
 		State newState = new State(commands[0]);
 
 		if (!containsState(commands[0])) {
@@ -45,7 +47,6 @@ public class Machine {
 			states.get(states.indexOf(newState)).addTransition(commands[1], commands[2], commands[3], commands[4]);
 		}
 	}
-
 
 	private boolean containsState(String newState) {
 		for (State state : states) {
@@ -59,9 +60,9 @@ public class Machine {
 	// aqui eh onde devem estar os testes da sintaxe, se os estados estao
 	// escritos da forma correta, nao gerara erro
 	public void organizeStates() throws StateNotFoundException {
-		
+
 		DataValidator.commandsValidator(states);
-		
+
 		for (State state : states) {
 			if (state.getName().equalsIgnoreCase("q0")) {
 				this.initialState = state;
@@ -114,6 +115,8 @@ public class Machine {
 
 	}
 
+	// adiciona a lista de configuracoes o estado atual da maquina (snapshot)
+
 	private void saveState(String currentStateName, String currentTape, int currentSteps) {
 		Configuration config = new Configuration(currentStateName, currentTape, "" + currentSteps);
 		configurations.add(config);
@@ -128,11 +131,13 @@ public class Machine {
 		return null;
 	}
 
+	// insere a entrada do usuario na fita
 	public void insertOnTape(String input) {
 		this.tape.insertOnTape(input);
 
 	}
 
+	// mostra na tela as configuracoes atuais (snapshots)
 	public void showSteps(Scanner userInput) {
 		System.out.print("press 'N' to the next step, or 'E' to run until the end: ");
 		String command = userInput.nextLine();
@@ -142,6 +147,9 @@ public class Machine {
 				System.out.print(">");
 				command = userInput.nextLine();
 			} else if (command.equalsIgnoreCase("e")) {
+				printConfiguration(config);
+			} else {
+				System.out.println("You don't press 'N' or 'E' to a valid command, running until the end...");
 				printConfiguration(config);
 			}
 		}
