@@ -42,7 +42,7 @@ public class TmsFacade {
 	}
 
 	private void runMachine(Scanner userInput) {
-		System.out.print("Now type the input word: ");
+		System.out.print("Now type the input word: \n>");
 		try {
 			controller.runMachine(userInput);
 		} catch (Exception e) {
@@ -53,11 +53,11 @@ public class TmsFacade {
 
 	private void printHeader() {
 		System.out.println(">>>>> Welcome to Turing Machine Simulator <<<<<\n");
-		System.out.println(">>> Please follow the form(separated by spaces):");
+		System.out.println(">>> Please follow the pattern(separated by spaces):");
 		System.out.println("<current state> <current symbol> <new symbol> <direction> <new state>\n");
 		System.out.println(">>> Using the syntax:");
 		System.out.println(
-				"> q0, q1,..., qn, qA, qR for the states where\n  q0,qA and qR are initial state, acceptance state and rejected state");
+				"> '!!' for the comments\n>q0, q1,..., qn, qA, qR for the states where\n  q0,qA and qR are initial state, acceptance state and rejected state");
 		System.out.println(
 				"> any character for <current symbol> and <new symbol> or '-'(hifen) to represent blank symbol");
 		System.out.println(
