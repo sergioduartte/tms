@@ -12,11 +12,11 @@ import machine.State;
 public class DataValidator {
 
 	public static void commandValidator(String[] commands) throws StatePatternException, DirectionPatternException {
-	
+
 		String statePattern = "q[\\w\\d]+";
 		String directionPattern = "[l,r,*]";
 
-		if (!commands[0].matches(statePattern) || !commands[4].matches(statePattern) ) {
+		if (!commands[0].matches(statePattern) || !commands[4].matches(statePattern)) {
 			throw new StatePatternException();
 
 		}
@@ -26,7 +26,7 @@ public class DataValidator {
 		}
 	}
 
-	public static void commandsValidator(List<State> states) throws StateNotFoundException{
+	public static void commandsValidator(List<State> states) throws StateNotFoundException {
 
 		boolean hasQ0 = false;
 		boolean hasQA = false;
@@ -44,31 +44,30 @@ public class DataValidator {
 				hasQR = true;
 			}
 		}
-		
-	if (hasQ0 == false) {
-		throw new StateNotFoundException("initial");
-	}
-	
-	if (hasQA == false) {
-		throw new StateNotFoundException("acceptance");
-	}
-	
-	if (hasQR == false) {
-		throw new StateNotFoundException("rejection");
-	}
-	
-	
-	
+
+		if (hasQ0 == false) {
+			throw new StateNotFoundException("initial");
+		}
+
+		if (hasQA == false) {
+			throw new StateNotFoundException("acceptance");
+		}
+
+		if (hasQR == false) {
+			throw new StateNotFoundException("rejection");
+		}
+
 	}
 
 	public static void inputValidator(State state, String actualInput) throws MissingCommandException {
 		if (!state.getFunctions().containsKey(actualInput)) {
 			throw new MissingCommandException(state.getName(), actualInput);
 		}
-		
+
 	}
 
-	public static void transitionValidator(State state, String inputSymbol, String directionSymbol, String newState) throws DuplicatedTransitionException {
+	public static void transitionValidator(State state, String inputSymbol, String directionSymbol, String newState)
+			throws DuplicatedTransitionException {
 		if (state.getFunctions().containsKey(inputSymbol)) {
 			if (state.getFunctions().get(inputSymbol).contains(directionSymbol)) {
 				if (state.getFunctions().get(inputSymbol).contains(newState)) {
@@ -76,9 +75,7 @@ public class DataValidator {
 				}
 			}
 		}
-		
+
 	}
-
-
 
 }

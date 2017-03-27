@@ -22,15 +22,16 @@ public class State {
 		return this.name;
 	}
 
-	public void addTransition(String inputSymbol, String writeSymbol, String directionSymbol, String newState) throws DuplicatedTransitionException {
-	
+	public void addTransition(String inputSymbol, String writeSymbol, String directionSymbol, String newState)
+			throws DuplicatedTransitionException {
+
 		ArrayList<String> transition = new ArrayList<String>();
 		transition.add(writeSymbol);
 		transition.add(directionSymbol);
 		transition.add(newState);
-		
+
 		DataValidator.transitionValidator(this, inputSymbol, directionSymbol, newState);
-		
+
 		transitionFunctions.put(inputSymbol, transition);
 
 	}
@@ -45,9 +46,8 @@ public class State {
 	public String[] processes(String actualInput) throws MissingCommandException {
 
 		DataValidator.inputValidator(this, actualInput);
-		
-		// ["writeSymbol","directionSymbol","newState",];
-		String[] output = new String[3]; 
+
+		String[] output = new String[3];
 		output[0] = this.transitionFunctions.get(actualInput).get(0);
 		output[1] = this.transitionFunctions.get(actualInput).get(1);
 		output[2] = this.transitionFunctions.get(actualInput).get(2);

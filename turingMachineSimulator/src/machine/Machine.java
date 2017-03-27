@@ -29,11 +29,9 @@ public class Machine {
 		this.steps = 0;
 
 	}
-	// caso nao haja nenhum problema com os comandos, sera criado um estado,
-	// caso o estado ja exista,
-	// sera adicionado uma funcao de transicao ao estado existente.
 
-	public void addState(String commandLine) throws StatePatternException, DirectionPatternException, DuplicatedTransitionException {
+	public void addState(String commandLine)
+			throws StatePatternException, DirectionPatternException, DuplicatedTransitionException {
 		String[] commands = commandLine.split(" ");
 
 		DataValidator.commandValidator(commands);
@@ -57,8 +55,6 @@ public class Machine {
 		return false;
 	}
 
-	// aqui eh onde devem estar os testes da sintaxe, se os estados estao
-	// escritos da forma correta, nao gerara erro
 	public void organizeStates() throws StateNotFoundException {
 
 		DataValidator.commandsValidator(states);
@@ -75,7 +71,6 @@ public class Machine {
 
 	}
 
-	// retorna se Aceita ou Rejeita a palavra
 	public String run() throws MissingCommandException {
 
 		String result = "";
@@ -84,8 +79,6 @@ public class Machine {
 
 		while (true) {
 
-			// retorna um array com o novo simbolo da fita, para que lado andar
-			// na fita e o novo estado
 			String[] nextSteps = currentState.processes(currentInput);
 
 			String writeSymbol = nextSteps[0];
@@ -115,8 +108,6 @@ public class Machine {
 
 	}
 
-	// adiciona a lista de configuracoes o estado atual da maquina (snapshot)
-
 	private void saveState(String currentStateName, String currentTape, int currentSteps) {
 		Configuration config = new Configuration(currentStateName, currentTape, "" + currentSteps);
 		configurations.add(config);
@@ -131,13 +122,11 @@ public class Machine {
 		return null;
 	}
 
-	// insere a entrada do usuario na fita
 	public void insertOnTape(String input) {
 		this.tape.insertOnTape(input);
 
 	}
 
-	// mostra na tela as configuracoes atuais (snapshots)
 	public void showSteps(Scanner userInput) {
 		System.out.print("press 'N' to the next step, or 'E' to run until the end: ");
 		String command = userInput.nextLine();
