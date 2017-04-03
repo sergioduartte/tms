@@ -31,16 +31,18 @@ public class Tape {
 		return this.input.get(position);
 	}
 	
+	public String getActualPosition() {
+		return this.position + "";
+	}
+	
 	public void move(String direction){
 		if (direction.equalsIgnoreCase("l")) {
 			this.position--;
 		} else if(direction.equalsIgnoreCase("r")){
 			this.position++;
 		} else if(direction.equalsIgnoreCase("*")){
-			//ter certeza que nao anda na fita
-		} else {	
-			System.out.println("invalid direction... Please fix your commands and rerun the apllication"); //lancar excessao.
-		}
+			// so pra ter certeza...
+		} 
 	}
 
 	public void write(String writeSymbol) {

@@ -1,5 +1,6 @@
 package ui;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -10,6 +11,7 @@ import exceptions.MissingCommandException;
 import exceptions.StateNotFoundException;
 import machine.FactoryMachine;
 import machine.Machine;
+import util.FReader;
 
 public class TmsController {
 	private List<String> commandLines;
@@ -36,7 +38,7 @@ public class TmsController {
 		while (true) {
 			if (input.equalsIgnoreCase("end")) {
 				break;
-			} else if (!input.startsWith("!!") || !input.startsWith("!! ")) { // comentarios
+			} else if (!input.startsWith("!!") || !input.startsWith("!! ")) {
 				commandLines.add(input);
 			}
 
@@ -47,18 +49,28 @@ public class TmsController {
 
 	}
 
-	public void runMachine(Scanner userInput) throws MissingCommandException {
 
-		String input = userInput.nextLine();
-
-		machine.insertOnTape(input);
-
-		String result = machine.run();
-
-		machine.showSteps(userInput);
-
-		System.out.println(result);
-
+	public void mountMachine(String path) throws IOException, MachineSyntaxException, StateNotFoundException, DuplicatedTransitionException{
+		
+		ArrayList<String> commands = FReader.readFile(path);
+		for (String line : commands) {
+			commandLines.add(line);
+		}
+		machine = FactoryMachine.getMachine(commandLines);
+		
 	}
 
+	public void runMachine(Scanner userInput) throws MissingCommandException {
+		
+		String input = userInput.nextLine();
+		
+		machine.insertOnTape(input);
+		
+		String result = machine.run();
+		
+		machine.showSteps(userInput);
+		
+		System.out.println(result);
+		
+	}
 }

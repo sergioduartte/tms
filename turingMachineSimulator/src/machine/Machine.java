@@ -92,24 +92,24 @@ public class Machine {
 			currentState = getStateByName(nextSteps[2]);
 
 			if (currentState.equals(acceptState)) {
-				saveState(currentState.getName(), this.tape.getTape(), steps);
+				saveState(currentState.getName(), this.tape.getTape(), steps, this.tape.getActualPosition());
 				result = "=== ACCEPTED ===";
 				break;
 			} else if (currentState.equals(rejectState)) {
-				saveState(currentState.getName(), this.tape.getTape(), steps);
+				saveState(currentState.getName(), this.tape.getTape(), steps, this.tape.getActualPosition());
 				result = "=== REJECTED ===";
 				break;
 			}
 
-			saveState(currentState.getName(), this.tape.getTape(), steps);
+			saveState(currentState.getName(), this.tape.getTape(), steps, this.tape.getActualPosition());
 		}
 
 		return result;
 
 	}
 
-	private void saveState(String currentStateName, String currentTape, int currentSteps) {
-		Configuration config = new Configuration(currentStateName, currentTape, "" + currentSteps);
+	private void saveState(String currentStateName, String currentTape, int currentSteps, String actualPos ) {
+		Configuration config = new Configuration(currentStateName, currentTape, "" + currentSteps, actualPos);
 		configurations.add(config);
 	}
 
@@ -133,19 +133,19 @@ public class Machine {
 		for (Configuration config : configurations) {
 			if (command.equalsIgnoreCase("n")) {
 				printConfiguration(config);
-				System.out.print(">");
+				System.out.print("> ");
 				command = userInput.nextLine();
 			} else if (command.equalsIgnoreCase("e")) {
 				printConfiguration(config);
 			} else {
-				System.out.println("You don't press 'N' or 'E' to a valid command, running until the end...");
+				System.out.println("You don't pressed 'N' or 'E' for a valid command, running until the end...");
 				printConfiguration(config);
 			}
 		}
 	}
 
 	private void printConfiguration(Configuration config) {
-		System.out.println("|| Current State: " + config.getCurrentState() + " || Tape: " + config.getCurrentTape()
+		System.out.println("|| Tape: " + config.getCurrentTape() + " || Head Position: " + config.getCurrentPosition() + " || Current State: " + config.getCurrentState()
 				+ " || Steps: " + config.getCurrentSteps() + " ||");
 	}
 
