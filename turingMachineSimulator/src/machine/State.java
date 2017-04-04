@@ -26,6 +26,7 @@ public class State {
 			throws DuplicatedTransitionException {
 
 		ArrayList<String> transition = new ArrayList<String>();
+
 		transition.add(writeSymbol);
 		transition.add(directionSymbol);
 		transition.add(newState);
@@ -46,11 +47,18 @@ public class State {
 	public String[] processes(String actualInput) throws MissingCommandException {
 
 		DataValidator.inputValidator(this, actualInput);
-
+		
+		String aInput = actualInput;
+		
 		String[] output = new String[3];
-		output[0] = this.transitionFunctions.get(actualInput).get(0);
-		output[1] = this.transitionFunctions.get(actualInput).get(1);
-		output[2] = this.transitionFunctions.get(actualInput).get(2);
+		
+		if (this.transitionFunctions.get(aInput) == null) {
+			aInput = "*";
+		}
+		
+		output[0] = this.transitionFunctions.get(aInput).get(0);
+		output[1] = this.transitionFunctions.get(aInput).get(1);
+		output[2] = this.transitionFunctions.get(aInput).get(2);
 
 		return output;
 	}

@@ -88,7 +88,7 @@ public class TmsFacade {
 		System.out.println(
 				"> '!!' for the comments\n>q0, q1,..., qn, qA, qR for the states where\n  q0,qA and qR are initial state, acceptance state and rejected state");
 		System.out.println(
-				"> any character for <current symbol> and <new symbol> or '-'(hifen) to represent blank symbol");
+				"> any character for <current symbol> and <new symbol>. The '_'(underline) to represent blank symbol");
 		System.out.println(
 				"> the <direction> should be 'l' to 'move left or 'r' to move right, '*' represents 'do not move'\n");
 		System.out.print(

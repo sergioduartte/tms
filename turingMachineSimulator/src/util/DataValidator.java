@@ -60,7 +60,7 @@ public class DataValidator {
 	}
 
 	public static void inputValidator(State state, String actualInput) throws MissingCommandException {
-		if (!state.getFunctions().containsKey(actualInput)) {
+		if (!state.getFunctions().containsKey(actualInput) && !state.getFunctions().containsKey("*")) {
 			throw new MissingCommandException(state.getName(), actualInput);
 		}
 

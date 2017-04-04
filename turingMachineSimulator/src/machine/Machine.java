@@ -76,6 +76,7 @@ public class Machine {
 		String result = "";
 		String currentInput = tape.getPos();
 		State currentState = initialState;
+		saveState(currentState.getName(), this.tape.getTape(), steps, this.tape.getActualPosition());
 
 		while (true) {
 

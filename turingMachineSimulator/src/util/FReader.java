@@ -15,11 +15,11 @@ public class FReader {
 		while (bReader.ready()) {
 			String line = bReader.readLine();
 			output.add(line);
+			System.out.println(line);
 			
 		}
 		
 		bReader.close();
-		System.out.println("\nYour commands are ok...\n");
 		return output;
 		
 	}
